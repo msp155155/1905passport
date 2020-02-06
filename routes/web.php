@@ -19,4 +19,5 @@ Route::post('reg','ApiController@reg');
 Route::post('login','ApiController@login');
 Route::get('info','ApiController@info');
 Route::post('showTime','ApiController@showTime');
+Route::post('/api/auth','ApiController@auth');
 

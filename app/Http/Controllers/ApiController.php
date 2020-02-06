@@ -133,7 +133,6 @@ class ApiController extends Controller
         $token =  $this->getToken($uid);        //生成token
         $redis_token_key = 'str:user:token:'.$uid;
         Redis::set($redis_token_key,$token,86400);  // 生成token  设置过期时间
-        $a = Redis::get($redis_token_key);echo "<br>";
         $response = [
             'errno' => 0,
             'msg'   => 'ok',
@@ -188,5 +187,45 @@ class ApiController extends Controller
             ];
         }
         return $response;
+    }
+
+    /**
+     * 接口鉴权
+     */
+    public function auth()
+    {
+        $uid = $_POST['uid'];
+        $token = $_POST['token'];
+        if(empty($uid) || empty($token))
+        {
+            $response = [
+                'errno' => 40003,
+                'msg'   => 'Token Not Valid!'
+            ];
+            return $response;
+        }
+        $redis_token_key = 'str:user:token:'.$uid;
+        //验证token是否有效
+        $cache_token = Redis::get($redis_token_key);
+        if($token==$cache_token)        // token 有效
+        {
+            $data = date("Y-m-d H:i:s");
+            $response = [
+                'errno' => 0,
+                'msg'   => 'ok',
+                'data'  => $data
+            ];
+        }else{
+            $response = [
+                'errno' => 40003,
+                'msg'   => 'Token Not Valid!'
+            ];
+        }
+        return $response;
+    }
+
+    public function info()
+    {
+        echo phpinfo();
     }
 }
