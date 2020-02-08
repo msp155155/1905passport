@@ -56,4 +56,11 @@ class TestController extends Controller
 
 
     }
+
+    public function sign3Md5()
+    {
+        header("Access-Control-Allow-Origin: *");
+        $data = $_GET;
+        var_dump($data);
+    }
 }

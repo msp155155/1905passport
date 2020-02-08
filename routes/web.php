@@ -22,4 +22,5 @@ Route::post('showTime','ApiController@showTime');
 Route::post('/api/auth','ApiController@auth');
 Route::post('/test/post','TestController@check2');//post验签
 Route::get('/test/get','TestController@md5test');//get验签
+Route::get('/test/sign3Md5','TestController@sign3Md5');//非对称数据加密
 
